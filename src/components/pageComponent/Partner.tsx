@@ -1,58 +1,54 @@
 // Partner.tsx
 import { Section } from "../../utility/utility";
 import { partners } from "../../data/data";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function Partners() {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 },
-    },
-  };
+  const controls = useAnimation();
+  const [paused, setPaused] = useState(false);
 
-  const item = {
-    hidden: { opacity: 0, scale: 0.85, y: 20 },
-    show: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-  };
+  // Infinite scroll
+  useEffect(() => {
+    if (!paused) {
+      controls.start({
+        x: ["0%", "-50%"],
+        transition: {
+          repeat: Infinity,
+          ease: "linear",
+          duration: 25,
+        },
+      });
+    } else {
+      controls.stop();
+    }
+  }, [paused, controls]);
 
   return (
-    <Section id="partners" className="py-16">
-      <motion.div
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={container}
-        className="rounded-3xl border border-zinc-200 dark:border-zinc-800 p-10 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-lg shadow-lg"
-      >
-        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-10">
+    <Section id="partners" className="py-20 overflow-hidden">
+      <div className="rounded-3xl p-12 shadow-2xl bg-white dark:bg-zinc-900 backdrop-blur-xl">
+        <h2 className="text-3xl font-extrabold text-center mb-12 text-zinc-900 dark:text-white tracking-tight">
           Our Trusted Partners
         </h2>
 
-        <motion.div
-          variants={container}
-          className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8"
+        {/* Auto-scrolling row */}
+        <div
+          className="relative w-full overflow-hidden"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
         >
-          {partners.map((p) => (
-            <TooltipItem key={p.logo} logo={p.logo} title={p.title} variants={item} />
-          ))}
-        </motion.div>
-      </motion.div>
+          <motion.div className="flex gap-12 w-max" animate={controls}>
+            {[...partners, ...partners].map((p, i) => (
+              <TooltipItem key={i} logo={p.logo} title={p.title} />
+            ))}
+          </motion.div>
+        </div>
+      </div>
     </Section>
   );
 }
 
-function TooltipItem({
-  logo,
-  title,
-  variants,
-}: {
-  logo: string;
-  title: string;
-  variants: any;
-}) {
+function TooltipItem({ logo, title }: { logo: string; title: string }) {
   const [hovered, setHovered] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
@@ -65,12 +61,13 @@ function TooltipItem({
   };
 
   return (
-    <motion.div
-      variants={variants}
+    <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onMouseMove={handleMouseMove}
-      className="relative group p-4 rounded-xl bg-white/60 dark:bg-zinc-800/60 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300"
+      className="relative group flex items-center justify-center min-w-[160px] min-h-[110px] p-6 rounded-2xl 
+                 bg-white dark:bg-zinc-800 
+                 shadow-md hover:shadow-lg transition-all duration-300"
     >
       <img
         src={logo}
@@ -86,18 +83,17 @@ function TooltipItem({
             opacity: 1,
             scale: 1,
             x: pos.x,
-            y: pos.y - 30, // offset above cursor
+            y: pos.y - 30,
           }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ type: "spring", stiffness: 250, damping: 20 }}
-          className="absolute pointer-events-none whitespace-nowrap px-3 py-1 rounded-lg bg-emerald-600 text-white text-xs shadow-lg z-50"
-          style={{
-            transform: `translate(-50%, -100%)`,
-          }}
+          className="absolute pointer-events-none whitespace-nowrap px-3 py-1 rounded-lg 
+                     bg-emerald-600 text-white text-xs shadow-lg z-50"
+          style={{ transform: `translate(-50%, -100%)` }}
         >
           {title}
         </motion.div>
       )}
-    </motion.div>
+    </div>
   );
 }

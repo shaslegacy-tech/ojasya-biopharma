@@ -49,3 +49,12 @@
   50% { filter: drop-shadow(0 0 12px var(--brand-2)); }
   100% { filter: drop-shadow(0 0 6px var(--brand-1)); }
 }
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20px, 20px); }
+}
+
+.animate-float {
+  animation: float 12s ease-in-out infinite;
+}

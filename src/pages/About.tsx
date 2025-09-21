@@ -1,38 +1,263 @@
-import { motion } from 'framer-motion'
-import PageTransition from '../components/PageTransition'
+// AboutUs.tsx
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useMotionValue, animate } from "framer-motion";
+import { coreValues, teamMembers, milestones, partners, testimonials } from "../data/data";
+import { Section, Card } from "../utility/utility";
+import FloatingBlobs from "../components/FloatingBlobs";
 
-export default function About() {
+export default function AboutUs() {
+  const container = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.15 } } };
+  const item = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } };
+
   return (
-    <PageTransition>
-      <div className="max-w-5xl mx-auto space-y-8">
-        <motion.h2 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="text-3xl font-bold">About Us</motion.h2>
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="text-neutral-700 dark:text-neutral-300">
-          We are a small team focused on performance, accessibility, and beautiful motion.
-        </motion.p>
+    <div className="relative min-h-screen w-full overflow-x-hidden">
+      <motion.div
+        className="absolute inset-0 z-0"
+        style={{ background: "linear-gradient(135deg, #DFFCF0, #C7F3F0, #E0F7FA)", backgroundSize: "400% 400%" }}
+        animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
+        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[
-            ['Performance-first', 'Vite + code-splitting for fast loads.'],
-            ['Accessible', 'Keyboard-friendly and ARIA where it matters.'],
-            ['Theming', 'Dark/light with graceful persistence.'],
-            ['Typed', 'TypeScript for confidence and DX.'],
-            ['Animated', 'Framer Motion everywhere it helps UX.'],
-            ['Responsive', 'Looks great on any screen.'],
-          ].map(([title, desc], i) => (
-            <motion.div
-              key={title}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ delay: i * 0.05 }}
-              className="p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800"
-            >
-              <h3 className="font-semibold mb-1">{title}</h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">{desc}</p>
-            </motion.div>
-          ))}
+      {/* Floating Blobs */}
+      <FloatingBlobs />
+
+      {/* Page Content */}
+      <div className="relative z-10">
+        {/* Hero Section */}
+        <Section className="relative pt-20 pb-24 text-center overflow-hidden">
+          {/* Layered Floating Blobs behind hero text */}
+          <motion.div
+            className="absolute top-[-120px] left-1/4 w-[350px] h-[350px] bg-emerald-300/40 rounded-full blur-3xl"
+            animate={{ y: [0, 25, 0], x: [0, 15, 0], rotate: [0, 15, 0] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute top-[80px] right-1/4 w-[300px] h-[300px] bg-teal-300/30 rounded-full blur-3xl"
+            animate={{ y: [0, -20, 0], x: [0, -15, 0], rotate: [0, -10, 0] }}
+            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute top-[50px] left-[50%] w-[250px] h-[250px] bg-sky-300/20 rounded-full blur-2xl"
+            style={{ translateX: "-50%" }}
+            animate={{ y: [0, 15, 0], rotate: [0, 20, 0] }}
+            transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          {/* Hero Text */}
+          <motion.h1
+            className="text-5xl sm:text-6xl font-extrabold mb-6 text-zinc-900 dark:text-white drop-shadow-lg relative z-10"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            About Ojasya Biopharma
+          </motion.h1>
+          <motion.p
+            className="text-lg sm:text-xl max-w-2xl mx-auto text-zinc-700 dark:text-zinc-300 relative z-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+          >
+            Advancing healthcare through innovation and high-quality pharmaceutical solutions.
+          </motion.p>
+
+          {/* Hero CTA */}
+          <motion.div
+            className="mt-8 flex justify-center relative z-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+          >
+            <button className="px-8 py-3 bg-emerald-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+              Learn More
+            </button>
+          </motion.div>
+
+          {/* Optional subtle gradient overlay for premium glow */}
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-white/10 mix-blend-overlay rounded-b-3xl"></div>
+        </Section>
+        {/* Mission & Vision */}
+        <Section className="py-16 max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
+          <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+            <Card className="p-6 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm shadow-lg rounded-2xl">
+              <h2 className="text-3xl font-bold mb-4 text-zinc-900 dark:text-white">Our Mission</h2>
+              <p className="text-zinc-700 dark:text-zinc-300">Provide high-quality pharmaceutical solutions improving patient outcomes globally.</p>
+            </Card>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+            <Card className="p-6 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm shadow-lg rounded-2xl">
+              <h2 className="text-3xl font-bold mb-4 text-zinc-900 dark:text-white">Our Vision</h2>
+              <p className="text-zinc-700 dark:text-zinc-300">Be a recognized leader in pharmaceutical innovation, delivering value to patients and communities.</p>
+            </Card>
+          </motion.div>
+        </Section>
+
+        {/* Core Values */}
+        <Section className="py-16">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-zinc-900 dark:text-white">Our Core Values</h2>
+          <motion.div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto" variants={container} initial="hidden" whileInView="show" viewport={{ once: true }}>
+            {coreValues.map((v) => (
+              <motion.div key={v.title} variants={item} className="p-6 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-xl hover:scale-105 transition-transform duration-300 text-center">
+                {v.icon && <div className="text-4xl mb-4 text-emerald-500 dark:text-emerald-400">{React.createElement(v.icon)}</div>}
+                <h3 className="font-bold text-xl mb-2 text-zinc-900 dark:text-white">{v.title}</h3>
+                <p className="text-zinc-600 dark:text-zinc-300">{v.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </Section>
+
+        {/* Timeline / Milestones */}
+        <Section className="py-16 max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-zinc-900 dark:text-white">Our Journey</h2>
+          <div className="relative">
+            <div className="border-l-2 border-emerald-400 absolute h-full left-1/2 transform -translate-x-1/2 hidden md:block" />
+            <div className="flex flex-col md:flex-row md:flex-wrap md:justify-between gap-8">
+              {milestones.map((m, idx) => (
+                <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: idx * 0.1 }} className="md:w-1/2 flex items-start md:items-center relative">
+                  <div className="flex-shrink-0 w-4 h-4 rounded-full bg-emerald-400 mt-1 md:mt-0 md:mr-6" />
+                  <div>
+                    <h3 className="font-bold text-zinc-900 dark:text-white">{m.year}</h3>
+                    <p className="text-zinc-600 dark:text-zinc-300">{m.event}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </Section>
+
+        {/* Team */}
+        <Section className="py-16">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-zinc-900 dark:text-white">Meet Our Team</h2>
+          <motion.div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto" variants={container} initial="hidden" whileInView="show" viewport={{ once: true }}>
+            {teamMembers.map((member, idx) => (
+              <motion.div key={idx} variants={item} className="text-center p-4 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm rounded-2xl shadow-md hover:shadow-xl hover:scale-105 transition-transform duration-300">
+                <div className="flex justify-center mb-4">
+                  <div className="h-20 w-20 rounded-full bg-emerald-400 dark:bg-emerald-600 flex items-center justify-center text-white font-bold text-xl">
+                    {member.name.split(" ").map((n) => n[0]).join("").toUpperCase()}
+                  </div>
+                </div>
+                <h3 className="font-bold text-lg text-zinc-900 dark:text-white">{member.name}</h3>
+                <p className="text-zinc-600 dark:text-zinc-300">{member.role}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </Section>
+
+        {/* Partners */}
+        <Section className="py-16">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-zinc-900 dark:text-white">Our Trusted Partners</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6 max-w-6xl mx-auto">
+            {partners.map((p, idx) => (
+              <div key={idx} className="flex items-center justify-center p-4 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm rounded-xl shadow-md hover:shadow-xl transition-all duration-300">
+                <img src={p.logo} alt={p.title} className="object-contain h-12 w-auto" />
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        {/* Testimonials Carousel */}
+        <Section className="py-16">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-zinc-900 dark:text-white">What Partners Say</h2>
+          <TestimonialsCarousel />
+        </Section>
+      </div>
+    </div>
+  );
+}
+
+// ================= Testimonials Carousel ===================
+function TestimonialsCarousel() {
+  const slidesToShow = 3;
+  const gap = 24;
+  const totalSlides = testimonials.length;
+  const [index, setIndex] = useState(0);
+  const x = useMotionValue(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [slideWidth, setSlideWidth] = useState(0);
+
+  useEffect(() => {
+    if (carouselRef.current) {
+      const containerWidth = carouselRef.current.offsetWidth;
+      setSlideWidth((containerWidth - (slidesToShow - 1) * gap) / slidesToShow);
+    }
+  }, [carouselRef.current?.offsetWidth]);
+
+  useEffect(() => {
+    const interval = setInterval(() => slideToIndex(index + slidesToShow), 6000);
+    return () => clearInterval(interval);
+  }, [index]);
+
+  const slideToIndex = (newIndex: number) => {
+    if (newIndex < 0) newIndex = 0;
+    if (newIndex > totalSlides - slidesToShow) newIndex = totalSlides - slidesToShow;
+    setIndex(newIndex);
+    animate(x, -newIndex * (slideWidth + gap), { type: "spring", stiffness: 200, damping: 30 });
+  };
+
+  const handleDragEnd = (_: any, info: { offset: { x: number } }) => {
+    const movedSlides = Math.round(-info.offset.x / (slideWidth + gap));
+    slideToIndex(index + movedSlides);
+  };
+
+  return (
+    <div className="relative overflow-hidden px-4">
+      {/* Gradient fade left/right */}
+      <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-emerald-50 dark:from-zinc-900 pointer-events-none" />
+      <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-emerald-50 dark:from-zinc-900 pointer-events-none" />
+
+      <motion.div
+        ref={carouselRef}
+        className="flex gap-6 cursor-grab"
+        style={{ x }}
+        drag="x"
+        dragConstraints={{ left: -(totalSlides - slidesToShow) * (slideWidth + gap), right: 0 }}
+        dragElastic={0.2}
+        onDragEnd={handleDragEnd}
+        whileTap={{ cursor: "grabbing" }}
+      >
+        {testimonials.map((t, i) => (
+          <TestimonialCard key={i} testimonial={t} slidesToShow={slidesToShow} gap={gap} />
+        ))}
+      </motion.div>
+
+      <div className="mt-10 flex justify-center gap-3">
+        {Array.from({ length: Math.ceil(totalSlides / slidesToShow) }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => slideToIndex(i * slidesToShow)}
+            className={`h-3 w-3 rounded-full transition-all ${
+              i === Math.floor(index / slidesToShow)
+                ? "bg-gradient-to-r from-emerald-400 via-teal-400 to-sky-400 scale-125"
+                : "bg-zinc-400/40 dark:bg-zinc-600/40"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TestimonialCard({ testimonial, slidesToShow, gap }: { testimonial: { name: string; role: string; quote: string }; slidesToShow: number; gap: number }) {
+  const names = testimonial.name.split(" ");
+  const initials = names.length > 1 ? names[0][0] + names[names.length - 1][0] : names[0][0];
+
+  return (
+    <motion.div
+      whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(16,185,129,0.3)" }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      style={{ flex: `0 0 calc((100% - ${(slidesToShow - 1) * gap}px)/${slidesToShow})` }}
+      className="bg-white dark:bg-zinc-900 rounded-3xl px-8 py-10 text-center"
+    >
+      <div className="flex justify-center mb-4">
+        <div className="h-16 w-16 rounded-full bg-emerald-400 dark:bg-emerald-600 flex items-center justify-center text-white font-bold text-xl ring-4 ring-emerald-400/50 dark:ring-emerald-500/40">
+          {initials.toUpperCase()}
         </div>
       </div>
-    </PageTransition>
-  )
+      <p className="text-zinc-700 dark:text-zinc-200 text-center italic">“{testimonial.quote}”</p>
+      <div className="mt-4 text-center">
+        <div className="font-medium text-zinc-800 dark:text-zinc-100">{testimonial.name}</div>
+        <div className="text-sm text-zinc-600 dark:text-zinc-400">{testimonial.role}</div>
+      </div>
+    </motion.div>
+  );
 }
