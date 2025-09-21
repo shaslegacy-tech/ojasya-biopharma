@@ -13,6 +13,7 @@ import PharmaSupplies from './pages/PharmaSupplies'
 import InjectionsDevices from './pages/InjectionsDevices'
 import HospitalDelivery from './pages/HospitalDelivery'
 import PartnersPage from './pages/PartnerPage'
+import BlogPage from './pages/Blog'
 
 export default function App() {
   const location = useLocation()
@@ -31,7 +32,7 @@ export default function App() {
               <Route path="injections" element={<InjectionsDevices />} />
               <Route path="delivery" element={<HospitalDelivery />} />
             </Route>
-            <Route path="/products" element={<Projects />} />
+            <Route path="/blog" element={<BlogPage />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
