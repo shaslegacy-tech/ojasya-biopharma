@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+   --brand-1: #1bb6b2; /* Main teal */
+  --brand-2: #e42d7b; /* Accent pink */
+  --brand-a: #0DABA9;
+  --brand-b: #3DB127;
+  --bg-light-1: #ffffff;
+  --bg-light-2: #f5f7fa;
+  --bg-dark-1: #0b0c10;
+  --bg-dark-2: #1a1d22;
+
+   --teal-light-1: #d0f5f4; /* very soft pastel teal */
+  --teal-light-2: #a0e4e3;
+  --teal-light-3: #78cfce;
+  
+  --teal-dark-1: #0b3d3c; /* deep teal */
+  --teal-dark-2: #0d5d5b;
+  --teal-dark-3: #0daba9; /* brand teal */
+
+  --hero-animation-progress: 0;
+}
+
+.dark {
+  --brand-1: #23d1cd; /* Slightly brighter teal for dark mode */
+  --brand-2: #ff4f96; /* Neon pink for dark mode */
+}
+
+/* Gradient text (kept) */
+.gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(90deg, #0DABA9, #3DB127, #F2C94C, #F2994A, #EB5757);
+}
+
+/* Navbar Style */
+
+.navbar-glow {
+  background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+  background-size: 200% 200%;
+  animation: glowShift 12s ease infinite;
+}
+
+@keyframes glowShift {
+  0% { filter: drop-shadow(0 0 6px var(--brand-1)); }
+  50% { filter: drop-shadow(0 0 12px var(--brand-2)); }
+  100% { filter: drop-shadow(0 0 6px var(--brand-1)); }
+}
