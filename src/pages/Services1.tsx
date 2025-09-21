@@ -34,8 +34,8 @@ const faqData = [
 
 export default function ServicePage() {
   return (
-    <div className="relative overflow-x-hidden min-h-screen bg-gradient-to-b from-emerald-50 to-teal-100 dark:from-zinc-900 dark:to-zinc-800 transition-all duration-500">
-      <FloatingBlobs />
+    <main className="bg-gradient-to-b from-cyan-50 via-emerald-50 to-white dark:from-gray-900 dark:via-teal-900 dark:to-zinc-900 text-zinc-900 dark:text-zinc-100">
+    <FloatingBlobs />
 
       {/* Hero */}
       <section className="relative bg-gradient-to-r from-emerald-400 via-teal-400 to-sky-400 text-white py-28 text-center">
@@ -144,7 +144,7 @@ export default function ServicePage() {
           Get in Touch
         </motion.button>
       </Section>
-    </div>
+    </main>
   );
 }
 

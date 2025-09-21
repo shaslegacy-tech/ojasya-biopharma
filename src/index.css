@@ -58,3 +58,22 @@
 .animate-float {
   animation: float 12s ease-in-out infinite;
 }
+
+/* Light and Dark full-page gradient background */
+.bg-brand-light {
+  background: linear-gradient(135deg, var(--teal-light-1), var(--teal-light-2), var(--teal-light-3));
+  background-size: 400% 400%;
+  animation: gradientShift 40s ease infinite;
+}
+
+.dark .bg-brand-light {
+  background: linear-gradient(135deg, var(--teal-dark-1), var(--teal-dark-2), var(--teal-dark-3));
+  background-size: 400% 400%;
+  animation: gradientShift 40s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}

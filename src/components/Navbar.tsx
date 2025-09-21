@@ -16,7 +16,7 @@ const links = [
       { label: 'Hospital Delivery', to: '/services/delivery' },
     ],
   },
-  { to: '/partners', label: 'Partners' },
+  { to: '/our-partners', label: 'Partners' },
   { to: '/blog', label: 'Blog' },
   { to: '/contact', label: 'Contact' },
 ]

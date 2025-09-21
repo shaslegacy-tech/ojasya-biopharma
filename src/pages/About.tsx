@@ -10,13 +10,7 @@ export default function AboutUs() {
   const item = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } };
 
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden">
-      <motion.div
-        className="absolute inset-0 z-0"
-        style={{ background: "linear-gradient(135deg, #DFFCF0, #C7F3F0, #E0F7FA)", backgroundSize: "400% 400%" }}
-        animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-      />
+    <main className="bg-gradient-to-b from-cyan-50 via-emerald-50 to-white dark:from-gray-900 dark:via-teal-900 dark:to-zinc-900 text-zinc-900 dark:text-zinc-100">
 
       {/* Floating Blobs */}
       <FloatingBlobs />
@@ -161,7 +155,7 @@ export default function AboutUs() {
           <TestimonialsCarousel />
         </Section>
       </div>
-    </div>
+    </main>
   );
 }
 

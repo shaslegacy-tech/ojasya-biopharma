@@ -67,14 +67,14 @@ const testimonials = [
 ];
 
 const partners = [
-  { title: "Cipla", logo: "/images/partners/cipla.png" },
-  { title: "Wellona", logo: "/images/partners/wellona.png" },
-  { title: "Alkem", logo: "/images/partners/alkem.png" },
-  { title: "Biocon", logo: "/images/partners/biocon.png" },
-  { title: "Glenmark", logo: "/images/partners/glenmark.png" },
-  { title: "Lupin", logo: "/images/partners/lupin.png" },
-  { title: "Novo", logo: "/images/partners/novo.png" },
-  { title: "Aurobindo", logo: "/images/partners/aurobindo.png" },
+  { title: "Cipla", logo: "/images/partners/cipla.png", website: "https://www.cipla.com/" },
+  { title: "Wellona", logo: "/images/partners/wellona.png", website: "https://www.wellona.com/" },
+  { title: "Alkem", logo: "/images/partners/alkem.png", website: "https://www.alkemlabs.com/" },
+  { title: "Biocon", logo: "/images/partners/biocon.png", website: "https://www.biocon.com/" },
+  { title: "Glenmark", logo: "/images/partners/glenmark.png", website: "https://www.glenmarkpharma.com/" },
+  { title: "Lupin", logo: "/images/partners/lupin.png", website: "https://www.lupin.com/" },
+  { title: "Novo", logo: "/images/partners/novo.png", website: "https://www.novopharma.com/" },
+  { title: "Aurobindo", logo: "/images/partners/aurobindo.png", website: "https://www.aurobindo.com/" },
 ];
 
 const coreValues = [
