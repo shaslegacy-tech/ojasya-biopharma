@@ -1,37 +1,47 @@
-"use client";
-
 import { Section } from "../../utility/utility";
 import { testimonials } from "../../data/data";
 import { motion, useMotionValue, animate } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
 export default function Testimonials() {
-  const slidesToShow = 3;
-  const gap = 24; // Tailwind gap-6 = 1.5rem = 24px
+  const gap = 24; // Tailwind gap-6
   const totalSlides = testimonials.length;
 
   const [index, setIndex] = useState(0);
+  const [slidesToShow, setSlidesToShow] = useState(3); // responsive
   const x = useMotionValue(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [slideWidth, setSlideWidth] = useState(0);
 
-  // Calculate slide width dynamically
+  // Responsive slidesToShow
+  useEffect(() => {
+    const handleResize = () => {
+      const w = window.innerWidth;
+      if (w < 640) setSlidesToShow(1); // mobile
+      else if (w < 1024) setSlidesToShow(2); // tablet
+      else setSlidesToShow(3); // desktop
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Calculate slide width
   useEffect(() => {
     if (carouselRef.current) {
       const containerWidth = carouselRef.current.offsetWidth;
       setSlideWidth((containerWidth - (slidesToShow - 1) * gap) / slidesToShow);
     }
-  }, [carouselRef.current?.offsetWidth]);
+  }, [carouselRef.current?.offsetWidth, slidesToShow]);
 
-  // Auto-slide every 6s
+  // Auto-slide
   useEffect(() => {
     const interval = setInterval(() => {
-      slideToIndex(index + slidesToShow);
+      slideToIndex(index + 1);
     }, 6000);
     return () => clearInterval(interval);
-  }, [index]);
+  }, [index, slidesToShow]);
 
-  // Slide to a given index with snap
   const slideToIndex = (newIndex: number) => {
     if (newIndex < 0) newIndex = 0;
     if (newIndex > totalSlides - slidesToShow) newIndex = totalSlides - slidesToShow;
@@ -39,7 +49,6 @@ export default function Testimonials() {
     animate(x, -newIndex * (slideWidth + gap), { type: "spring", stiffness: 200, damping: 30 });
   };
 
-  // Snap on drag end
   const handleDragEnd = (_: any, info: { offset: { x: number } }) => {
     const movedSlides = Math.round(-info.offset.x / (slideWidth + gap));
     slideToIndex(index + movedSlides);
@@ -51,7 +60,6 @@ export default function Testimonials() {
         What Partners Say
       </h2>
 
-      {/* Carousel container */}
       <div className="relative mt-14 overflow-hidden px-4">
         {/* Gradient masks */}
         <div className="absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-white dark:from-zinc-900 pointer-events-none" />
@@ -111,7 +119,6 @@ function TestimonialCard({
       style={{ flex: `0 0 calc((100% - ${(slidesToShow - 1) * gap}px)/${slidesToShow})` }}
       className="bg-white dark:bg-zinc-900 rounded-3xl px-8 py-10 text-center"
     >
-      {/* Initials Avatar */}
       <div className="flex justify-center mb-4">
         <div className="h-16 w-16 rounded-full bg-emerald-400 dark:bg-emerald-600 
                         flex items-center justify-center text-white font-bold text-xl ring-4 ring-emerald-400/50 dark:ring-emerald-500/40">
@@ -119,12 +126,8 @@ function TestimonialCard({
         </div>
       </div>
 
-      {/* Quote */}
-      <p className="text-zinc-700 dark:text-zinc-200 text-center italic">
-        “{testimonial.quote}”
-      </p>
+      <p className="text-zinc-700 dark:text-zinc-200 text-center italic">“{testimonial.quote}”</p>
 
-      {/* Name + Role */}
       <div className="mt-4 text-center">
         <div className="font-medium text-zinc-800 dark:text-zinc-100">{testimonial.name}</div>
         <div className="text-sm text-zinc-600 dark:text-zinc-400">{testimonial.role}</div>

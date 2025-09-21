@@ -67,8 +67,8 @@ export default function BlogPage() {
       </section>
 
       {/* Featured Post */}
-      {featuredPost && (
-        <section className="container mx-auto px-6 mb-16">
+        <section className="container mx-auto px-6 md:px-12 lg:px-20 py-12 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {featuredPost && (
           <motion.div
             className="relative overflow-hidden rounded-2xl shadow-xl group cursor-pointer"
             initial={{ opacity: 0, y: 40 }}
@@ -96,8 +96,8 @@ export default function BlogPage() {
               </button>
             </div>
           </motion.div>
+        )}
         </section>
-      )}
 
       {/* Filters */}
       <section className="container mx-auto px-6 py-8 sticky top-20 z-20 bg-transparent">
