@@ -14,6 +14,11 @@ import InjectionsDevices from './pages/InjectionsDevices'
 import HospitalDelivery from './pages/HospitalDelivery'
 import PartnersPage from './pages/PartnerPage'
 import BlogPage from './pages/Blog'
+import SingleBlogPage from './pages/SingleBlogPage'
+import PrivacyPolicyPagePremium from './pages/PrivacyPolicyPagePremium'
+import TermsPage from './pages/TermsPage'
+import CareersPage from './pages/CareersPage'
+import SingleCareerPage from './pages/SingleCareerPage'
 
 export default function App() {
   const location = useLocation()
@@ -33,7 +38,12 @@ export default function App() {
               <Route path="delivery" element={<HospitalDelivery />} />
             </Route>
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:id" element={<SingleBlogPage />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/careers/:id" element={<SingleCareerPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPagePremium   />} />
+            <Route path="/terms" element={<TermsPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>

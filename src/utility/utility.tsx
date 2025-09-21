@@ -36,5 +36,11 @@ const Card = ({ children, className }: UtilityProps) => (
 //   return <div className={`rounded-2xl shadow-md p-6 bg-white dark:bg-zinc-800 ${className}`}>{children}</div>;
 // };
 
+// Utility to create slug from title
+const createSlug = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 
-export { Section, Card }
+export { Section, Card, createSlug };

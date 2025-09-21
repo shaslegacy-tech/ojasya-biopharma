@@ -2,14 +2,17 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BlogCard from "../components/blog/BlogCard";
 import { blogPosts } from "../data/blogData";
+import PaginationBar from "../components/PaginationBar";
+import { useNavigate } from "react-router-dom";
 
 export default function BlogPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [visibleCount, setVisibleCount] = useState(6);
   const [currentPage, setCurrentPage] = useState(1);
-
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
+  const navigate = useNavigate();
 
   const categories = ["All", ...new Set(blogPosts.map((p) => p.category))];
 
@@ -19,7 +22,6 @@ export default function BlogPage() {
       post.title.toLowerCase().includes(search.toLowerCase())
   );
 
-  // Featured post
   const featuredPost = filteredPosts[0];
   const restPosts = filteredPosts.slice(1);
 
@@ -43,11 +45,11 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[var(--bg-light-2)] to-[var(--teal-light-1)] dark:from-[var(--bg-dark-1)] dark:to-[var(--teal-dark-2)] transition-colors duration-500">
-      
+
       {/* Hero */}
       <section className="relative py-20 text-center overflow-hidden">
         <motion.div
-          className="absolute inset-0 opacity-30 bg-gradient-to-r from-[var(--brand-1)] via-[var(--brand-2)] to-[var(--brand-b)] blur-3xl"
+          className="absolute inset-0 opacity-20 bg-gradient-to-r from-[var(--brand-1)] via-[var(--brand-2)] to-[var(--brand-b)] blur-3xl"
           animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
           style={{ backgroundSize: "200% 200%" }}
@@ -87,7 +89,9 @@ export default function BlogPage() {
                 {featuredPost.title}
               </h2>
               <p className="mt-3 text-gray-200 max-w-2xl">{featuredPost.excerpt}</p>
-              <button className="mt-6 px-6 py-2 rounded-full bg-gradient-to-r from-[var(--brand-1)] to-[var(--brand-2)] text-white font-semibold shadow-lg hover:scale-105 transition">
+              <button
+               onClick={() => navigate(`/blog/${featuredPost.id}`)}
+               className="mt-6 px-6 py-2 rounded-full bg-gradient-to-r from-[var(--brand-1)] to-[var(--brand-2)] text-white font-semibold shadow-lg hover:scale-105 transition">
                 Read More
               </button>
             </div>
@@ -96,7 +100,7 @@ export default function BlogPage() {
       )}
 
       {/* Filters */}
-      <section className="container mx-auto px-6 py-8">
+      <section className="container mx-auto px-6 py-8 sticky top-20 z-20 bg-transparent">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <input
             type="text"
@@ -137,7 +141,6 @@ export default function BlogPage() {
       <section className="container mx-auto px-6 pb-16">
         {restPosts.length > 0 ? (
           <>
-            {/* Grid */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
               <AnimatePresence>
                 {paginatedPosts.map((post) => (
@@ -166,54 +169,12 @@ export default function BlogPage() {
               </div>
             )}
 
-            {/* Sticky Pagination with Arrows */}
-            <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40">
-            <div className="flex justify-center items-center gap-2 bg-white/80 dark:bg-gray-900/80 
-                            backdrop-blur-xl shadow-lg px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700">
-                
-                {/* Previous Button */}
-                <button
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition ${
-                    currentPage === 1
-                    ? "opacity-40 cursor-not-allowed"
-                    : "hover:bg-gray-200 dark:hover:bg-gray-700"
-                }`}
-                >
-                ←
-                </button>
-
-                {/* Page Numbers */}
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition ${
-                    currentPage === page
-                        ? "bg-gradient-to-r from-[var(--brand-1)] to-[var(--brand-2)] text-white shadow-lg"
-                        : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                    }`}
-                >
-                    {page}
-                </button>
-                ))}
-
-                {/* Next Button */}
-                <button
-                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                disabled={currentPage === totalPages}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition ${
-                    currentPage === totalPages
-                    ? "opacity-40 cursor-not-allowed"
-                    : "hover:bg-gray-200 dark:hover:bg-gray-700"
-                }`}
-                >
-                →
-                </button>
-            </div>
-            </div>
-
+            {/* Sticky Pagination */}
+            <PaginationBar
+              totalPages={totalPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
           </>
         ) : (
           <p className="text-center text-gray-500 dark:text-gray-400 text-lg py-20">
