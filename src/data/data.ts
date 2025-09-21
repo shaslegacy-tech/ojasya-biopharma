@@ -1,8 +1,49 @@
 import { ReactElement } from "react";
-import { Microscope, Pill, ShieldCheck, TestTube, Lightbulb, Shield, Handshake, Search  } from "lucide-react";
+import { LucideIcon } from "lucide-react";
+import { 
+  Microscope, 
+  Pill, 
+  ShieldCheck,
+  TestTube,
+  Lightbulb,
+  Shield, 
+  Handshake, 
+  Search, 
+  Database, 
+  Box, 
+  Cpu,
+  Truck,
+  Syringe
+} from "lucide-react";
+
 
 // const LOGO_SRC = "/assets/hero_image.png"; // place your logo here
 const LOGO_SRC = "/favicon.png";
+
+const footerMenu = [ 
+  { title: "Company", links: [ 
+    { label: "About Us", href: "/about" }, 
+    { label: "Our Team", href: "/about#team" }, 
+    { label: "Careers", href: "/careers" }, 
+  ], 
+}, 
+// { title: "Services", links: [ 
+//   { label: "Pharma Supplies", href: "/services/pharma-supplies" }, 
+//   { label: "Injections & Devices", href: "/services/injections" }, 
+//   { label: "Hospital Delivery", href: "/services/delivery" }, 
+//  ], 
+// }, 
+{ title: "Resources", links: [
+   { label: "Blog", href: "/blog" }, 
+   { label: "Contact Us", href: "/contact" },
+   ], 
+  }, 
+  { title: "Legal", links: [ 
+    { label: "Privacy Policy", href: "/privacy-policy" }, 
+    { label: "Terms & Conditions", href: "/terms" }, 
+  ], 
+}, 
+];
 
 const stats = [
   { label: "Years of Innovation", value: 12 },
@@ -59,7 +100,7 @@ const milestones: { year: string; event: string }[] = [
   { year: "2021", event: "Recognized as a top Biopharma innovator" },
 ];
 
-export { LOGO_SRC, stats, products, testimonials, partners, coreValues, teamMembers, milestones };
+export { LOGO_SRC, footerMenu, stats, products, testimonials, partners, coreValues, teamMembers, milestones };
 
 
 // export const partners: { title: string; logo: string }[] = [
@@ -79,3 +120,14 @@ export { LOGO_SRC, stats, products, testimonials, partners, coreValues, teamMemb
 //   { name: "Rohan Joshi", role: "Supply Chain Partner", quote: "Consistently delivers high standards and excellent support." },
 //   { name: "Priya Sharma", role: "Clinical Researcher", quote: "Their commitment to innovation is truly inspiring." },
 // ];
+
+// Service page
+export const services: { title: string; desc: string; icon?: LucideIcon }[] = [
+  { title: "Clinical Trials", desc: "Managing trials to meet global regulatory standards.", icon: Database },
+  { title: "Hospital Supply", desc: "Delivering all pharma products directly to hospitals efficiently.", icon: Truck },
+  { title: "Medicines", desc: "High-quality medicines from top pharmaceutical brands.", icon: Pill },
+  { title: "Injections & Vaccines", desc: "Safe, temperature-controlled supply of injections and vaccines.", icon: Syringe },
+  { title: "Medical Equipment", desc: "Reliable delivery of hospital equipment and consumables.", icon: Box },
+  { title: "Research & Innovation", desc: "Innovative solutions for improving patient outcomes.", icon: Cpu },
+
+];

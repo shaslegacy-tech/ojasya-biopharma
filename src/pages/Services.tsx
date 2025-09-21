@@ -1,37 +1,46 @@
-import { motion } from 'framer-motion'
-import PageTransition from '../components/PageTransition'
+// ServicesPage.tsx
+import { NavLink, Outlet } from "react-router-dom";
 
-const items = [
-  { title: 'UI Engineering', desc: 'Component-driven, typed, tested.' },
-  { title: 'Design Systems', desc: 'Tokens, theming, and documentation.' },
-  { title: 'Animations', desc: 'Micro-interactions, transitions, parallax.' },
-  { title: 'Performance', desc: 'Lighthouse, Core Web Vitals, profiling.' },
-]
+export default function ServicesPage() {
+  const subMenu = [
+    { label: "Pharma Supplies", href: "pharma-supplies" },
+    { label: "Injections & Devices", href: "injections" },
+    { label: "Hospital Delivery", href: "delivery" },
+  ];
 
-export default function Services() {
   return (
-    <PageTransition>
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold mb-8">Services</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {items.map((s, i) => (
-            <motion.div
-              key={s.title}
-              whileHover={{ y: -6, rotate: -0.5 }}
-              whileTap={{ scale: 0.98 }}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ delay: i * 0.05 }}
-              className="p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm"
+    <div className="relative overflow-hidden">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-emerald-200 via-teal-100 to-sky-200 dark:from-emerald-900 dark:via-emerald-800 dark:to-sky-900 opacity-20 pointer-events-none z-0" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-12">
+        {/* Hero */}
+        <h1 className="text-4xl sm:text-5xl font-bold text-center mb-10 text-emerald-700 dark:text-emerald-300">
+          Our Services
+        </h1>
+
+        {/* Submenu Navigation */}
+        <nav className="flex gap-6 mb-12 justify-center flex-wrap">
+          {subMenu.map((item) => (
+            <NavLink
+              key={item.href}
+              to={item.href}
+              className={({ isActive }) =>
+                `px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                  isActive
+                    ? "bg-emerald-400 text-white shadow-lg scale-105"
+                    : "bg-white/70 dark:bg-zinc-800/60 text-zinc-800 dark:text-white hover:bg-emerald-200 dark:hover:bg-emerald-600"
+                }`
+              }
             >
-              <div className="w-10 h-10 rounded-xl bg-brand/10 grid place-items-center mb-3">✨</div>
-              <h3 className="font-semibold">{s.title}</h3>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">{s.desc}</p>
-            </motion.div>
+              {item.label}
+            </NavLink>
           ))}
-        </div>
+        </nav>
+
+        {/* Submenu content */}
+        <Outlet />
       </div>
-    </PageTransition>
-  )
+    </div>
+  );
 }

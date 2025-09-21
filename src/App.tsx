@@ -4,10 +4,14 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import About from './pages/About'
-import Services from './pages/Services'
+import Services from './pages/Services1'
+import ServicesPage from './pages/Services'
 import Projects from './pages/Projects'
 import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
+import PharmaSupplies from './pages/PharmaSupplies'
+import InjectionsDevices from './pages/InjectionsDevices'
+import HospitalDelivery from './pages/HospitalDelivery'
 
 export default function App() {
   const location = useLocation()
@@ -19,7 +23,12 @@ export default function App() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
+            <Route path="/our-services" element={<Services />} />
+            <Route path="/services" element={<ServicesPage />}>
+              <Route path="pharma-supplies" element={<PharmaSupplies />} />
+              <Route path="injections" element={<InjectionsDevices />} />
+              <Route path="delivery" element={<HospitalDelivery />} />
+            </Route>
             <Route path="/products" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
