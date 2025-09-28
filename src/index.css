@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+
 :root {
    --brand-1: #1bb6b2; /* Main teal */
   --brand-2: #e42d7b; /* Accent pink */
