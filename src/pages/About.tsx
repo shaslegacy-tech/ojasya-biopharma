@@ -4,7 +4,7 @@ import { motion, useMotionValue, animate } from "framer-motion";
 import { coreValues, teamMembers, milestones, partners, testimonials } from "../data/data";
 import { Section, Card } from "../utility/utility";
 import FloatingBlobs from "../components/FloatingBlobs";
-import Testimonials from "../components/Testimonials";
+import Testimonials from "../components/pageComponent/Testimonials";
 
 // ✅ Hook for responsive slides
 function useResponsiveSlides() {
